@@ -15,6 +15,7 @@
              Description = description;      // set Description
              Date = date;                    // set Date
              IsComplete = isComplete;        // set IsComplete
+             // ID = length of TaskList , and use this for when task is completed - display ID on the list
         }
     }
 
@@ -103,7 +104,7 @@
 
             // print pending tasks
             Console.WriteLine(" - PENDING tasks -\n");
-            var pendingTasks = TaskList.Where(task => !task.IsComplete);
+            var pendingTasks = TaskList.Where(task => !task.IsComplete);   // .ToList()
             foreach (var task in pendingTasks)
             {
                 PrintTaskDetails(task);
@@ -155,7 +156,7 @@
                         break;
                     // close the app
                     case "close":
-                        Console.WriteLine("Goodbye");
+                        Console.WriteLine("Goodbye :)");
                         isOpen = false;         // set isOpen to false
                         break;
                     // none of the above
