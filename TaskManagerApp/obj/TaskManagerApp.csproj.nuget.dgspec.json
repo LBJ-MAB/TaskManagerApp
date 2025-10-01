@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Laurie.bassett-jones\\Projects\\TaskManagerApp\\TaskManagerApp\\TaskManagerApp.csproj": {}
+    "C:\\Users\\Laurie.bassett-jones\\Projects\\TaskManagerApp\\TaskManagerAPP\\TaskManagerApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Laurie.bassett-jones\\Projects\\TaskManagerApp\\TaskManagerApp\\TaskManagerApp.csproj": {
+    "C:\\Users\\Laurie.bassett-jones\\Projects\\TaskManagerApp\\TaskManagerAPP\\TaskManagerApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Laurie.bassett-jones\\Projects\\TaskManagerApp\\TaskManagerApp\\TaskManagerApp.csproj",
+        "projectUniqueName": "C:\\Users\\Laurie.bassett-jones\\Projects\\TaskManagerApp\\TaskManagerAPP\\TaskManagerApp.csproj",
         "projectName": "TaskManagerApp",
-        "projectPath": "C:\\Users\\Laurie.bassett-jones\\Projects\\TaskManagerApp\\TaskManagerApp\\TaskManagerApp.csproj",
+        "projectPath": "C:\\Users\\Laurie.bassett-jones\\Projects\\TaskManagerApp\\TaskManagerAPP\\TaskManagerApp.csproj",
         "packagesPath": "C:\\Users\\Laurie.bassett-jones\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Laurie.bassett-jones\\Projects\\TaskManagerApp\\TaskManagerApp\\obj\\",
+        "outputPath": "C:\\Users\\Laurie.bassett-jones\\Projects\\TaskManagerApp\\TaskManagerAPP\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Laurie.bassett-jones\\AppData\\Roaming\\NuGet\\NuGet.Config"
