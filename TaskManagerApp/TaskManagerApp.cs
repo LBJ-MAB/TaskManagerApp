@@ -86,15 +86,25 @@ namespace TaskManagerApp
         }
         
         // PrintTaskDetails() method
-        public void PrintTaskDetails(UserTask task)
+        public void PrintTaskDetails(List<UserTask> taskList, string pendingOrCompleted)
         {
             /*
              * Method that prints out the title, completed status, description and date of the task
              */
-            
-            Console.WriteLine("Title       : {0} --- {1}", task.Title, task.IsComplete ? "COMPLETE" : "PENDING");
-            Console.WriteLine("Description : {0}", task.Description);
-            Console.WriteLine("Deadline    : {0}\n", task.Date);
+
+            if (taskList.Count > 0)
+            {
+                foreach (var task in taskList)
+                {
+                    Console.WriteLine("Title       : {0} --- {1}", task.Title, task.IsComplete ? "COMPLETE" : "PENDING");
+                    Console.WriteLine("Description : {0}", task.Description);
+                    Console.WriteLine("Deadline    : {0}\n", task.Date);
+                }
+            }
+            else
+            {
+                Console.WriteLine("No {0} tasks", pendingOrCompleted);
+            }
         }
 
         // PrintTasks() method
@@ -109,19 +119,13 @@ namespace TaskManagerApp
 
             // print pending tasks
             Console.WriteLine(" - PENDING tasks -\n");
-            var pendingTasks = TaskList.Where(task => !task.IsComplete);   // .ToList()
-            foreach (var task in pendingTasks)
-            {
-                PrintTaskDetails(task);
-            }
+            var pendingTasks = TaskList.Where(task => !task.IsComplete).ToList();
+            PrintTaskDetails(pendingTasks, "pending");
 
             // print completed tasks
             Console.WriteLine(" - COMPLETED tasks -\n");
-            var completedTasks = TaskList.Where(task => task.IsComplete);
-            foreach (var task in completedTasks)
-            {
-                PrintTaskDetails(task);
-            }
+            var completedTasks = TaskList.Where(task => task.IsComplete).ToList();
+            PrintTaskDetails(completedTasks, "completed");
         }
         
         // read tasks from json file method
@@ -142,10 +146,10 @@ namespace TaskManagerApp
         {
             // turn whole TaskList into jsonString
             string jsonString = JsonSerializer.Serialize(TaskList);
+            
             // write the json string to file
             File.WriteAllText("tasks.json", jsonString);
         }
-        
     }
     
     class Program
