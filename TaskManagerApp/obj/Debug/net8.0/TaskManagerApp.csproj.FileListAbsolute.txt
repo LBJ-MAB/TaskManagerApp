@@ -12,3 +12,4 @@ C:\Users\Laurie.bassett-jones\Projects\TaskManagerApp\TaskManagerApp\obj\Debug\n
 C:\Users\Laurie.bassett-jones\Projects\TaskManagerApp\TaskManagerApp\obj\Debug\net8.0\TaskManagerApp.pdb
 C:\Users\Laurie.bassett-jones\Projects\TaskManagerApp\TaskManagerApp\obj\Debug\net8.0\TaskManagerApp.genruntimeconfig.cache
 C:\Users\Laurie.bassett-jones\Projects\TaskManagerApp\TaskManagerApp\obj\Debug\net8.0\ref\TaskManagerApp.dll
+C:\Users\Laurie.bassett-jones\Projects\TaskManagerApp\TaskManagerApp\obj\Debug\net8.0\TaskManagerApp.sourcelink.json
