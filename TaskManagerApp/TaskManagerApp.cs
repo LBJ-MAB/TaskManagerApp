@@ -1,28 +1,45 @@
 ﻿namespace TaskManagerApp
 {
-    class Task      // class for a single task
+    class UserTask      // class for a single task
     {
-        public string Title { get; set; }           // Title property
-        public string Description { get; set; }     // Description property
-        public string Date { get; set; }            // Date property
-        public bool IsComplete { get; set; }        // IsComplete property
+        public string? Title { get; set; }           // Title property
+        public string? Description { get; set; }     // Description property
+        public string? Date { get; set; }            // Date property
+        public bool IsComplete { get; set; }         // IsComplete property
         
         // constructor for the Task class:
-        public Task(string taskTitle, string taskDescription, string taskDate)
+        public UserTask(string? Title, string? Description, string? Date)
         {
-            Title = taskTitle;              // set title
-            Description = taskDescription;  // set description
-            Date = taskDate;                // set date
-            IsComplete = false;             // initialise IsComplete as false
+            IsComplete = false;         // false on creation
         }
     }
 
     class TaskManager       // class for task manager
     {
-        public List<Task> TaskList = new List<Task>();      // create list for storing Tasks
+        public List<UserTask> TaskList = new List<UserTask>();      // create list for storing UserTasks
+        public void AddTask()       // method for adding a task to TaskList
+        {
+            // ask for the title
+            Console.Write("Title : ");
+            string? title = Console.ReadLine();
+            
+            // ask for the desc
+            Console.Write("Description : ");
+            string? desc = Console.ReadLine();
+            
+            // ask for the date
+            Console.Write("Date : ");
+            string? date = Console.ReadLine();
+            
+            // create a UserTask() object using title, desc, date
+            UserTask newTask = new UserTask(title, desc, date);
+            
+            // add the UserTask() object to the TaskList
+            TaskList.Add(newTask);
+        }
     }
     
-    class TaskManagerApp
+    class Program
     {
         static void Main(string[] args)
         {
@@ -30,9 +47,6 @@
             
             // DateTime test = DateTime.Parse("02/10/2000");
             // Console.WriteLine(test.ToLongDateString());
-            
-            // make an object of instance Task()
-            Task firstTask = new Task("task 1", "first task of the day","11/10/2025");
         }
     }
 }
