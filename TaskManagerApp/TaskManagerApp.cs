@@ -2,23 +2,37 @@
 {
     class UserTask      // class for a single task
     {
-        public string? Title { get; set; }           // Title property
-        public string? Description { get; set; }     // Description property
-        public string? Date { get; set; }            // Date property
-        public bool IsComplete { get; set; }         // IsComplete property
+        // define properties for userTask
+        public string? Title { get; set; }
+        public string? Description { get; set; }
+        public string? Date { get; set; }
+        public bool IsComplete { get; set; }
         
         // constructor for the Task class:
-        public UserTask(string? Title, string? Description, string? Date)
+        public UserTask(string? title, string? description, string? date)
         {
-            IsComplete = false;         // false on creation
+             Title = title;                  // set Title
+             Description = description;      // set Description
+             Date = date;                    // set Date
+             IsComplete = false;             // set IsComplete
         }
     }
 
     class TaskManager       // class for task manager
     {
-        public List<UserTask> TaskList = new List<UserTask>();      // create list for storing UserTasks
-        public void AddTask()       // method for adding a task to TaskList
+        // create list for storing UserTasks
+        public List<UserTask> TaskList = new List<UserTask>();      
+        
+        // AddTask() method
+        public void AddTask()       
         {
+            /*
+             * Method for adding a UserTask() to TaskList
+             */
+            
+            // intro
+            Console.WriteLine("\n - New Task Details -");
+            
             // ask for the title
             Console.Write("Title : ");
             string? title = Console.ReadLine();
@@ -37,6 +51,23 @@
             // add the UserTask() object to the TaskList
             TaskList.Add(newTask);
         }
+
+        // PrintTasks() method
+        public void PrintTasks()
+        {
+            /*
+             * Method for printing out all tasks in TaskList
+             */
+            
+            Console.WriteLine("\n - Current Task List - \n");
+
+            foreach (var task in TaskList)
+            {
+                Console.WriteLine("{0} --- {1}", task.Title, task.IsComplete ? "COMPLETE" : "PENDING");
+                Console.WriteLine("Description : {0}", task.Description);
+                Console.WriteLine("Deadline    : {0}\n", task.Date);
+            }
+        }
     }
     
     class Program
@@ -45,8 +76,15 @@
         {
             Console.WriteLine("--- Task Manager App ---");
             
-            // DateTime test = DateTime.Parse("02/10/2000");
-            // Console.WriteLine(test.ToLongDateString());
+            // make a new TaskManager class called MyTasks
+            TaskManager myTasks = new TaskManager();
+            
+            // add a new task to MyTasks
+            myTasks.AddTask();
+            myTasks.AddTask();
+            
+            // print out all tasks so far
+            myTasks.PrintTasks();
         }
     }
 }
