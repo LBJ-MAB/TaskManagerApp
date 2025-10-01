@@ -84,28 +84,6 @@ namespace TaskManagerApp
             // tell user that no task was found with that title
             Console.WriteLine("No pending task found with title '{0}'", title);
         }
-        
-        // PrintTaskDetails() method
-        public void PrintTaskDetails(List<UserTask> taskList, string pendingOrCompleted)
-        {
-            /*
-             * Method that prints out the title, completed status, description and date of the task
-             */
-
-            if (taskList.Count > 0)
-            {
-                foreach (var task in taskList)
-                {
-                    Console.WriteLine("Title       : {0} --- {1}", task.Title, task.IsComplete ? "COMPLETE" : "PENDING");
-                    Console.WriteLine("Description : {0}", task.Description);
-                    Console.WriteLine("Deadline    : {0}\n", task.Date);
-                }
-            }
-            else
-            {
-                Console.WriteLine("No {0} tasks", pendingOrCompleted);
-            }
-        }
 
         // PrintTasks() method
         public void PrintTasks()
@@ -116,16 +94,34 @@ namespace TaskManagerApp
             
             // intro
             Console.WriteLine("\n -- Current Task List -- ");
+            
+            bool[] falseTrueArray = { false, true };
 
-            // print pending tasks
-            Console.WriteLine(" - PENDING tasks -\n");
-            var pendingTasks = TaskList.Where(task => !task.IsComplete).ToList();
-            PrintTaskDetails(pendingTasks, "pending");
+            // loop through false, true
+            foreach (bool isComplete in falseTrueArray)
+            {
+                // print depending on isComplete value
+                Console.WriteLine(" - {0} tasks -\n", isComplete ? "COMPLETED" : "PENDING");
+                
+                // filter tasks depending on isComplete value
+                var filteredTasks = TaskList.Where(task => task.IsComplete == isComplete).ToList();
 
-            // print completed tasks
-            Console.WriteLine(" - COMPLETED tasks -\n");
-            var completedTasks = TaskList.Where(task => task.IsComplete).ToList();
-            PrintTaskDetails(completedTasks, "completed");
+                // print tasks if there are any
+                if (filteredTasks.Count > 0)
+                {
+                    foreach (var task in filteredTasks)
+                    {
+                        Console.WriteLine("Title       : {0} --- {1}", task.Title, task.IsComplete ? "COMPLETE" : "PENDING");
+                        Console.WriteLine("Description : {0}", task.Description);
+                        Console.WriteLine("Deadline    : {0}\n", task.Date);
+                    }
+                }
+                // print message if no tasks to display
+                else
+                {
+                    Console.WriteLine("No {0} tasks\n", isComplete ? "completed" : "pending");
+                }
+            }
         }
         
         // read tasks from json file method
