@@ -79,10 +79,10 @@
              */
             
             // intro
-            Console.WriteLine("\n - Current Task List - ");
+            Console.WriteLine("\n -- Current Task List -- ");
 
             // print pending tasks
-            Console.WriteLine("PENDING tasks:");
+            Console.WriteLine(" - PENDING tasks -\n");
             var pendingTasks = TaskList.Where(task => !task.IsComplete);
             foreach (var task in pendingTasks)
             {
@@ -90,11 +90,26 @@
             }
 
             // print completed tasks
-            Console.WriteLine("COMPLETED tasks:");
+            Console.WriteLine(" - COMPLETED tasks -\n");
             var completedTasks = TaskList.Where(task => task.IsComplete);
             foreach (var task in completedTasks)
             {
                 task.PrintTaskDetails();
+            }
+        }
+        
+        // CompleteTask( title ) method
+        public void CompleteTask(string title)
+        {
+            // iterate through list
+            foreach (var task in TaskList)
+            {
+                // find task that matches the title
+                if (task.Title == title && !task.IsComplete)
+                {
+                    // change the IsComplete status to true
+                    task.IsComplete = true;
+                }
             }
         }
     }
@@ -106,12 +121,38 @@
             // make a new TaskManager class called MyTasks
             TaskManager myTasks = new TaskManager();
             
-            // ask user if they wish to add a task, mark a task as complete, view all tasks or close the app
+            // ask user to add, mark, view or close
             var isOpen = true;
             while (isOpen)
             {
-                Console.Write("\nType 'add' to add a task, 'mark' to change the complete status of a task, 'view' to" +
-                              "view the task list, or 'close' to close the application");
+                // intro
+                Console.Write("\nType 'add' to add a task, 'complete' to change a pending task to completed, 'view' to " +
+                              "view the task list, or 'close' to close the application: ");
+                // response
+                string? response = Console.ReadLine();
+
+                // use different methods depending on response
+                switch (response)
+                {
+                    case "add":
+                        myTasks.AddTask();
+                        break;
+                    case "complete":
+                        Console.Write("Please give the title of the task to be completed: ");
+                        string? targetTitle = Console.ReadLine();
+                        myTasks.CompleteTask(targetTitle!);
+                        break;
+                    case "view":
+                        myTasks.PrintTasks();
+                        break;
+                    case "close":
+                        Console.WriteLine("Goodbye");
+                        isOpen = false;         // set isOpen to false
+                        break;
+                    default:
+                        Console.WriteLine("ERROR: response was not valid");
+                        break;
+                }
             }
 
             // add a new task to MyTasks
