@@ -9,24 +9,12 @@
         public bool IsComplete { get; set; }
         
         // constructor for the Task class:
-        public UserTask(string? title, string? description, string? date)
+        public UserTask(string? title, string? description, string? date, bool isComplete)
         {
              Title = title;                  // set Title
              Description = description;      // set Description
              Date = date;                    // set Date
-             IsComplete = false;             // set IsComplete
-        }
-
-        // PrintTaskDetails() method
-        public void PrintTaskDetails()
-        {
-            /*
-             * Method that prints out the title, completed status, description and date of the task
-             */
-            
-            Console.WriteLine("Title       : {0} --- {1}", Title, IsComplete ? "COMPLETE" : "PENDING");
-            Console.WriteLine("Description : {0}", Description);
-            Console.WriteLine("Deadline    : {0}\n", Date);
+             IsComplete = isComplete;        // set IsComplete
         }
     }
 
@@ -64,38 +52,11 @@
             Console.Write("Date : ");
             string? date = Console.ReadLine();
             
-            // create a UserTask() object using title, desc, date
-            UserTask newTask = new UserTask(title, desc, date);
+            // create a UserTask() object using title, desc, date, isComplete
+            UserTask newTask = new UserTask(title, desc, date, false);
             
             // add the UserTask() object to the TaskList
             TaskList.Add(newTask);
-        }
-
-        // PrintTasks() method
-        public void PrintTasks()
-        {
-            /*
-             * Method for printing out all tasks in TaskList
-             */
-            
-            // intro
-            Console.WriteLine("\n -- Current Task List -- ");
-
-            // print pending tasks
-            Console.WriteLine(" - PENDING tasks -\n");
-            var pendingTasks = TaskList.Where(task => !task.IsComplete);
-            foreach (var task in pendingTasks)
-            {
-                task.PrintTaskDetails();
-            }
-
-            // print completed tasks
-            Console.WriteLine(" - COMPLETED tasks -\n");
-            var completedTasks = TaskList.Where(task => task.IsComplete);
-            foreach (var task in completedTasks)
-            {
-                task.PrintTaskDetails();
-            }
         }
         
         // CompleteTask( title ) method
@@ -116,6 +77,45 @@
             
             // tell user that no task was found with that title
             Console.WriteLine("No pending task found with title '{0}'", title);
+        }
+        
+        // PrintTaskDetails() method
+        public void PrintTaskDetails(UserTask task)
+        {
+            /*
+             * Method that prints out the title, completed status, description and date of the task
+             */
+            
+            Console.WriteLine("Title       : {0} --- {1}", task.Title, task.IsComplete ? "COMPLETE" : "PENDING");
+            Console.WriteLine("Description : {0}", task.Description);
+            Console.WriteLine("Deadline    : {0}\n", task.Date);
+        }
+
+        // PrintTasks() method
+        public void PrintTasks()
+        {
+            /*
+             * Method for printing out all tasks in TaskList
+             */
+            
+            // intro
+            Console.WriteLine("\n -- Current Task List -- ");
+
+            // print pending tasks
+            Console.WriteLine(" - PENDING tasks -\n");
+            var pendingTasks = TaskList.Where(task => !task.IsComplete);
+            foreach (var task in pendingTasks)
+            {
+                PrintTaskDetails(task);
+            }
+
+            // print completed tasks
+            Console.WriteLine(" - COMPLETED tasks -\n");
+            var completedTasks = TaskList.Where(task => task.IsComplete);
+            foreach (var task in completedTasks)
+            {
+                PrintTaskDetails(task);
+            }
         }
     }
     
@@ -139,21 +139,26 @@
                 // use different methods depending on response
                 switch (response)
                 {
-                    case "add":
+                    // add a task to list
+                    case "add":     
                         myTasks.AddTask();
                         break;
+                    // change a task to completed
                     case "complete":
                         Console.Write("Please give the title of the task to be completed: ");
                         string? targetTitle = Console.ReadLine();
                         myTasks.CompleteTask(targetTitle!);
                         break;
+                    // print all tasks
                     case "view":
                         myTasks.PrintTasks();
                         break;
+                    // close the app
                     case "close":
                         Console.WriteLine("Goodbye");
                         isOpen = false;         // set isOpen to false
                         break;
+                    // none of the above
                     default:
                         Console.WriteLine("ERROR: response was not valid");
                         break;
