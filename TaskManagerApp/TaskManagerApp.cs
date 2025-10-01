@@ -1,4 +1,6 @@
-﻿namespace TaskManagerApp
+﻿using System.Text.Json;
+
+namespace TaskManagerApp
 {
     class UserTask      // class for a single task
     {
@@ -21,15 +23,18 @@
 
     class TaskManager       // class for task manager
     {
-        // constructor with welcome message and print current tasks
+        // initialise a list for storing UserTasks
+        public List<UserTask> TaskList = new List<UserTask>();
+        
+        // constructor with welcome message, read tasks from json and print current tasks
         public TaskManager()
         {
             Console.WriteLine("--- Welcome to Task Manager App ---");
-            PrintTasks();
+            
+            ReadTasksFromJson();    // read tasks from json file into TaskList
+            
+            PrintTasks();           // print tasks
         }
-        
-        // create list for storing UserTasks
-        public List<UserTask> TaskList = new List<UserTask>();      
         
         // AddTask() method
         public void AddTask()       
@@ -118,6 +123,29 @@
                 PrintTaskDetails(task);
             }
         }
+        
+        // read tasks from json file method
+        public void ReadTasksFromJson()
+        {
+            // define url to retrieve from
+            string jsonFilePath = "tasks.json";
+            
+            // define json string that we are reading in
+            string jsonString = File.ReadAllText(jsonFilePath);
+            
+            // deserialize Json back into list of UserTask() objects
+            TaskList = JsonSerializer.Deserialize<List<UserTask>>(jsonString)!;
+        }
+        
+        // write tasks to json file method
+        public void WriteTasksToJson()
+        {
+            // turn whole TaskList into jsonString
+            string jsonString = JsonSerializer.Serialize(TaskList);
+            // write the json string to file
+            File.WriteAllText("tasks.json", jsonString);
+        }
+        
     }
     
     class Program
@@ -156,6 +184,8 @@
                         break;
                     // close the app
                     case "close":
+                        // write the first task in the list to json file
+                        myTasks.WriteTasksToJson();
                         Console.WriteLine("Goodbye :)");
                         isOpen = false;         // set isOpen to false
                         break;
