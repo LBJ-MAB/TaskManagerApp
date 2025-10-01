@@ -24,7 +24,7 @@
              * Method that prints out the title, completed status, description and date of the task
              */
             
-            Console.WriteLine("{0} --- {1}", Title, IsComplete ? "COMPLETE" : "PENDING");
+            Console.WriteLine("Title       : {0} --- {1}", Title, IsComplete ? "COMPLETE" : "PENDING");
             Console.WriteLine("Description : {0}", Description);
             Console.WriteLine("Deadline    : {0}\n", Date);
         }
@@ -109,8 +109,13 @@
                 {
                     // change the IsComplete status to true
                     task.IsComplete = true;
+                    Console.WriteLine("Pending task '{0}' completed", title);
+                    return;
                 }
             }
+            
+            // tell user that no task was found with that title
+            Console.WriteLine("No pending task found with title '{0}'", title);
         }
     }
     
@@ -118,10 +123,10 @@
     {
         static void Main(string[] args)
         {
-            // make a new TaskManager class called MyTasks
+            // make a new TaskManager object called MyTasks
             TaskManager myTasks = new TaskManager();
             
-            // ask user to add, mark, view or close
+            // ask user to add, complete, view or close
             var isOpen = true;
             while (isOpen)
             {
@@ -154,13 +159,6 @@
                         break;
                 }
             }
-
-            // add a new task to MyTasks
-            // myTasks.AddTask();
-            // myTasks.AddTask();
-
-            // print out all tasks so far
-            // myTasks.PrintTasks();
         }
     }
 }
