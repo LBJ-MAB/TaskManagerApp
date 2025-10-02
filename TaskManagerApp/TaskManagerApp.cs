@@ -59,15 +59,15 @@ namespace TaskManagerApp
             
             // ask for the title
             Console.Write("Title : ");
-            string? title = Console.ReadLine();
+            string? title = "Task 1";         // Console.ReadLine()
             
             // ask for the desc
             Console.Write("Description : ");
-            string? desc = Console.ReadLine();
+            string? desc = "first task of the day";        // Console.ReadLine()
             
             // ask for the date
             Console.Write("Date : ");
-            string? date = Console.ReadLine();
+            string? date = "02/10/2025";        // Console.ReadLine()
             
             // create a UserTask() object using title, desc, date, isComplete
             UserTask newTask = new UserTask(title, desc, date, false, TaskList.Count);
