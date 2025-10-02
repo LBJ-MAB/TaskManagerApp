@@ -27,6 +27,16 @@ namespace TaskManagerApp
         // initialise a list for storing UserTasks
         public List<UserTask> TaskList = new List<UserTask>();
         
+        // dictionary for storing texType : textColor pairs
+        public Dictionary<string, ConsoleColor> TextColors = new Dictionary<string, ConsoleColor>{
+            {"pending", ConsoleColor.DarkYellow },
+            {"complete", ConsoleColor.Green},
+            {"index", ConsoleColor.Blue},
+            {"error", ConsoleColor.Red},
+            {"update", ConsoleColor.Blue},
+            {"empty", ConsoleColor.DarkGray}
+        };
+        
         // constructor with welcome message, read tasks from json and print current tasks
         public TaskManager()
         {
@@ -73,15 +83,17 @@ namespace TaskManagerApp
             int taskId = consoleId - 1;         
             
             // set task to true if not already
-            if (!TaskList[taskId].IsComplete)
+            if (consoleId <= TaskList.Count && !TaskList[taskId].IsComplete)
             {
                 TaskList[taskId].IsComplete = true;
-                Console.WriteLine("Task {0} : '{1}' has been moved to completed", consoleId, TaskList[taskId].Title);
+                PrintTextWithColor(
+                    $"Task {consoleId} : '{TaskList[taskId].Title}' has been moved to completed\n", 
+                    "update");
             }
             else
             {
                 // tell user that no task was found with that ID
-                Console.WriteLine("No pending task was found with ID '{0}'", consoleId);
+                PrintTextWithColor($"No pending task was found with ID '{consoleId}'\n", "error");
             }
         }
 
@@ -111,17 +123,41 @@ namespace TaskManagerApp
                 {
                     foreach (var task in filteredTasks)
                     {
-                        Console.WriteLine("{0}  Title       : {1} --- {2}", (task.TaskId + 1), task.Title, task.IsComplete ? "COMPLETE" : "PENDING");
+                        PrintTextWithColor($"{task.TaskId + 1}", "index");
+                        Console.Write("  Title       : {0} --- ", task.Title);
+                        PrintTextWithColor(task.IsComplete ? "COMPLETE" : "PENDING", task.IsComplete ? "complete" : "pending");
+                        Console.WriteLine("");
                         Console.WriteLine("   Description : {0}", task.Description);
                         Console.WriteLine("   Deadline    : {0}\n", task.Date);
                     }
                 }
+                
                 // print message if no tasks to display
                 else
                 {
-                    Console.WriteLine("No {0} tasks\n", isComplete ? "completed" : "pending");
+                    if (isComplete)
+                    {
+                        PrintTextWithColor($"No completed tasks\n\n", "empty");
+                    }
+                    else
+                    {
+                        PrintTextWithColor($"No pending tasks\n\n", "empty");
+                    }
                 }
             }
+        }
+        
+        // print with color method
+        public void PrintTextWithColor(string text, string textType)
+        {
+            // change the text color for the console
+            Console.ForegroundColor = TextColors[textType];
+
+            // console.write(text)
+            Console.Write(text);
+
+            // change the text color back to Black
+            Console.ForegroundColor = ConsoleColor.Black;
         }
         
         // read tasks from json file method
@@ -185,7 +221,7 @@ namespace TaskManagerApp
                         }
                         catch
                         {
-                            Console.WriteLine("ERROR: Please provide a valid integer value for the task index");
+                            myTasks.PrintTextWithColor("ERROR: Please provide a valid integer value for the task index", "error");
                         }
                         break;
                     // print all tasks
@@ -201,7 +237,7 @@ namespace TaskManagerApp
                         break;
                     // none of the above
                     default:
-                        Console.WriteLine("ERROR: response was not valid");
+                        myTasks.PrintTextWithColor("ERROR: response was not valid", "error");
                         break;
                 }
             }
