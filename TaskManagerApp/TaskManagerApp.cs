@@ -27,7 +27,7 @@ namespace TaskManagerApp
         // initialise a list for storing UserTasks
         public List<UserTask> TaskList = new List<UserTask>();
         
-        // dictionary for storing texType : textColor pairs
+        // dictionary for storing textType : textColor pairs
         public Dictionary<string, ConsoleColor> TextColors = new Dictionary<string, ConsoleColor>{
             {"pending", ConsoleColor.DarkYellow },
             {"complete", ConsoleColor.Green},
