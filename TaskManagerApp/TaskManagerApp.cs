@@ -67,23 +67,22 @@ namespace TaskManagerApp
         }
         
         // CompleteTask( title ) method
-        public void CompleteTask(string title)
+        public void CompleteTask(int consoleId)
         {
-            // iterate through list
-            foreach (var task in TaskList)
-            {
-                // find task that matches the title
-                if (task.Title == title && !task.IsComplete)
-                {
-                    // change the IsComplete status to true
-                    task.IsComplete = true;
-                    Console.WriteLine("Pending task '{0}' completed", title);
-                    return;
-                }
-            }
+            // id for TaskList
+            int taskId = consoleId - 1;         
             
-            // tell user that no task was found with that title
-            Console.WriteLine("No pending task found with title '{0}'", title);
+            // set task to true if not already
+            if (!TaskList[taskId].IsComplete)
+            {
+                TaskList[taskId].IsComplete = true;
+                Console.WriteLine("Task {0} : '{1}' has been moved to completed", consoleId, TaskList[taskId].Title);
+            }
+            else
+            {
+                // tell user that no task was found with that ID
+                Console.WriteLine("No pending task was found with ID '{0}'", consoleId);
+            }
         }
 
         // PrintTasks() method
@@ -178,9 +177,16 @@ namespace TaskManagerApp
                         break;
                     // change a task to completed
                     case "complete":
-                        Console.Write("Please give the title of the task to be completed: ");
-                        string? targetTitle = Console.ReadLine();
-                        myTasks.CompleteTask(targetTitle!);
+                        Console.Write("Please provide the index of the task to be completed: ");
+                        try
+                        {
+                            int consoleId = Convert.ToInt32(Console.ReadLine());
+                            myTasks.CompleteTask(consoleId);
+                        }
+                        catch
+                        {
+                            Console.WriteLine("ERROR: Please provide a valid integer value for the task index");
+                        }
                         break;
                     // print all tasks
                     case "view":
