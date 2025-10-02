@@ -9,15 +9,16 @@ namespace TaskManagerApp
         public string? Description { get; set; }
         public string? Date { get; set; }
         public bool IsComplete { get; set; }
+        public int TaskId { get; set; }
         
         // constructor for the Task class:
-        public UserTask(string? title, string? description, string? date, bool isComplete)
+        public UserTask(string? title, string? description, string? date, bool isComplete, int taskId)
         {
              Title = title;                  // set Title
              Description = description;      // set Description
              Date = date;                    // set Date
              IsComplete = isComplete;        // set IsComplete
-             // ID = length of TaskList , and use this for when task is completed - display ID on the list
+             TaskId = taskId;                // set task ID 
         }
     }
 
@@ -59,7 +60,7 @@ namespace TaskManagerApp
             string? date = Console.ReadLine();
             
             // create a UserTask() object using title, desc, date, isComplete
-            UserTask newTask = new UserTask(title, desc, date, false);
+            UserTask newTask = new UserTask(title, desc, date, false, TaskList.Count);
             
             // add the UserTask() object to the TaskList
             TaskList.Add(newTask);
@@ -111,7 +112,7 @@ namespace TaskManagerApp
                 {
                     foreach (var task in filteredTasks)
                     {
-                        Console.WriteLine("{0}  Title       : {1} --- {2}", 1, task.Title, task.IsComplete ? "COMPLETE" : "PENDING");
+                        Console.WriteLine("{0}  Title       : {1} --- {2}", (task.TaskId + 1), task.Title, task.IsComplete ? "COMPLETE" : "PENDING");
                         Console.WriteLine("   Description : {0}", task.Description);
                         Console.WriteLine("   Deadline    : {0}\n", task.Date);
                     }
@@ -133,8 +134,11 @@ namespace TaskManagerApp
             // define json string that we are reading in
             string jsonString = File.ReadAllText(jsonFilePath);
             
-            // deserialize Json back into list of UserTask() objects
-            TaskList = JsonSerializer.Deserialize<List<UserTask>>(jsonString)!;
+            // deserialize Json back into list of UserTask() objects if json string is usable
+            if (!string.IsNullOrEmpty(jsonString))
+            {
+                TaskList = JsonSerializer.Deserialize<List<UserTask>>(jsonString)!;
+            }
         }
         
         // write tasks to json file method
