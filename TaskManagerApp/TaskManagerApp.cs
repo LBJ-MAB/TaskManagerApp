@@ -111,9 +111,9 @@ namespace TaskManagerApp
                 {
                     foreach (var task in filteredTasks)
                     {
-                        Console.WriteLine("Title       : {0} --- {1}", task.Title, task.IsComplete ? "COMPLETE" : "PENDING");
-                        Console.WriteLine("Description : {0}", task.Description);
-                        Console.WriteLine("Deadline    : {0}\n", task.Date);
+                        Console.WriteLine("{0}  Title       : {1} --- {2}", 1, task.Title, task.IsComplete ? "COMPLETE" : "PENDING");
+                        Console.WriteLine("   Description : {0}", task.Description);
+                        Console.WriteLine("   Deadline    : {0}\n", task.Date);
                     }
                 }
                 // print message if no tasks to display
