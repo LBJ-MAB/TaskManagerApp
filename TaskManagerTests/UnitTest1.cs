@@ -68,5 +68,15 @@ public class Tests
         // assert
         _taskManager.TaskList[0].Should().BeEquivalentTo(userTask);
     }
-    
+
+    [Test]
+    public void TestIsCompletedChange()
+    {
+        for (int i = 0; i < 100; i++)
+        {
+            _taskManager.AddTask();
+            _taskManager.CompleteTask(i + 1);
+            _taskManager.TaskList[i].IsComplete.Should().Be(true);
+        }
+    }
 }
